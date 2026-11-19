@@ -1,0 +1,168 @@
+{
+  "upstream_revision": "d85c24a1ec9228de7c4876904f260a0093312b70",
+  "fixture_revision": "afc6e9acdb35a3f2f24f3aaf192ac802a91b0211",
+  "go_version": "go version go1.23.12 linux/amd64",
+  "binary_sha256": "74201c781d1d8f75bae60d52a658aef3fe661b858a1012eeaa6a17038bc8b958",
+  "adapter_sha256": "9370b40d59b2ac4fa5f2605ead690dfb798e3b847028f7fc30819a5a5231bb5e",
+  "runner_sha256": "24809ca16a8da85816e231f7c1c3e3b6d2f5379dffc03a643d23a08cb5f0ac70",
+  "input_sha256": {
+    "examples/openproof-approval-outcome/01-approval-executed.json": "1a99535f898f4dbdf9fd2497292ff6cdfcd68215d01dbb81feec661e59aa1318",
+    "examples/openproof-approval-outcome/02-approval-altered-after-issue.json": "1a99535f898f4dbdf9fd2497292ff6cdfcd68215d01dbb81feec661e59aa1318",
+    "examples/openproof-approval-outcome/03-approved-not-executed.json": "576481031c9d0112f8f5f5f33e915900a5060222fa05e187ba68573dc8e98f42",
+    "examples/openproof-approval-outcome/04-reference-unresolvable.json": "64ae488906199494e9c531d237ed3cb7ef2175280c9765bbc93b83c8aa9ddd0c",
+    "examples/openproof-approval-outcome/05-approval-outside-trust.json": "12afbe0f88c8d4f667416face2bdab0171414f309925b951708ade8bc496556a",
+    "examples/openproof-approval-outcome/expected.json": "fdfad3442dcd425516c53b4153cc073ef0ebd9ff9462b8804361320b6bd9b2e2",
+    "examples/openproof-approval-outcome/openproof-approvals-altered.json": "27f0e3fc72a4ec88e3b85b11540b7b608048ff4f74385c1edffb8ee7e534b694",
+    "examples/openproof-approval-outcome/openproof-approvals.json": "64b18084b316efcf26e732fb8a0dcba5dbda35887ccf979fbded73d76558bc29",
+    "tests/test_openproof_approval_outcome_fixtures.py": "b2ec8bbfd3243ef18f99fdc322f1140eeeed2f829d9ecd3fda58ef0686412c1f"
+  },
+  "upstream_tests": "ok  \topenproof.local/go-witness\t0.004s\n",
+  "cases": [
+    {
+      "case": "01-approval-executed.json",
+      "python": {
+        "reference_resolves": true,
+        "digest_matches": true,
+        "approval_attributable": true,
+        "executed_as_approved": true,
+        "witnessed": true,
+        "verdict": "approval-confirmed-and-executed"
+      },
+      "go": {
+        "complete_history": true,
+        "document_version_continuity_verified": true,
+        "physical_effects_proven": false,
+        "status": "receiver_confirmed_and_witnessed",
+        "verification_scope": "independent_implementation_stateless"
+      },
+      "native_adapter": {
+        "history": {
+          "complete_history": true,
+          "document_version_continuity_verified": true,
+          "physical_effects_proven": false,
+          "status": "receiver_confirmed_and_witnessed",
+          "verification_scope": "independent_implementation_stateless"
+        },
+        "verdict": "approval-confirmed-and-executed"
+      },
+      "adapter_agrees": true,
+      "evaluation_epoch": 1794187732,
+      "negative_controls": [],
+      "comparison": "agree"
+    },
+    {
+      "case": "02-approval-altered-after-issue.json",
+      "python": {
+        "reference_resolves": true,
+        "digest_matches": false,
+        "approval_attributable": null,
+        "executed_as_approved": null,
+        "witnessed": null,
+        "verdict": "approval-contradicted"
+      },
+      "go": {
+        "status": "verification_failed"
+      },
+      "native_adapter": {
+        "verdict": "approval-contradicted"
+      },
+      "adapter_agrees": true,
+      "evaluation_epoch": 1794187732,
+      "negative_controls": [],
+      "comparison": "agree"
+    },
+    {
+      "case": "03-approved-not-executed.json",
+      "python": {
+        "reference_resolves": true,
+        "digest_matches": true,
+        "approval_attributable": true,
+        "executed_as_approved": false,
+        "witnessed": null,
+        "verdict": "approved-not-executed"
+      },
+      "go": null,
+      "native_adapter": {
+        "verdict": "approved-not-executed"
+      },
+      "adapter_agrees": true,
+      "evaluation_epoch": 1794187732,
+      "negative_controls": [
+        {
+          "name": "wrong-root",
+          "result": {
+            "rejected_at": "trust",
+            "verdict": "trust-unverified"
+          }
+        },
+        {
+          "name": "bad-approval-signature",
+          "result": {
+            "rejected_at": "approval",
+            "verdict": "approval-not-attributable"
+          }
+        },
+        {
+          "name": "bad-passkey-signature",
+          "result": {
+            "rejected_at": "passkey",
+            "verdict": "approval-not-attributable"
+          }
+        }
+      ],
+      "comparison": "outside-full-history-cli-contract",
+      "reason": "no signed execution receipt"
+    },
+    {
+      "case": "04-reference-unresolvable.json",
+      "python": {
+        "reference_resolves": false,
+        "digest_matches": null,
+        "approval_attributable": null,
+        "executed_as_approved": null,
+        "witnessed": null,
+        "verdict": "approval-unconfirmed"
+      },
+      "go": null,
+      "native_adapter": {
+        "verdict": "approval-unconfirmed"
+      },
+      "adapter_agrees": true,
+      "evaluation_epoch": 1794187732,
+      "negative_controls": [],
+      "comparison": "outside-full-history-cli-contract",
+      "reason": "unresolved reference"
+    },
+    {
+      "case": "05-approval-outside-trust.json",
+      "python": {
+        "reference_resolves": true,
+        "digest_matches": true,
+        "approval_attributable": false,
+        "executed_as_approved": null,
+        "witnessed": null,
+        "verdict": "approval-not-attributable"
+      },
+      "go": null,
+      "native_adapter": {
+        "rejected_at": "approval",
+        "verdict": "approval-not-attributable"
+      },
+      "adapter_agrees": true,
+      "evaluation_epoch": 1794187732,
+      "negative_controls": [],
+      "comparison": "outside-full-history-cli-contract",
+      "reason": "no signed execution receipt"
+    }
+  ],
+  "limits": [
+    "Historical replay at checkpoint time; current freshness is not evaluated.",
+    "Two history comparisons; three cases have no comparable CLI verdict.",
+    "All five have adapter results; reference lookup/digest composition is new code.",
+    "Approval-only checks call native verifyAssertion without inventing a sequence.",
+    "JSON serialization covers only the asserted ASCII/safe-integer fixture domain.",
+    "Trust and checkpoint are supplied by this synthetic fixture harness.",
+    "Go and Python share project authorship; no authorship independence is claimed.",
+    "Shared rejection does not establish identical rejection reasons."
+  ]
+}

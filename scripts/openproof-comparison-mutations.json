@@ -1,0 +1,14 @@
+[
+  {
+    "disabled_check": "trust-signature",
+    "caught_by_own_control": true
+  },
+  {
+    "disabled_check": "approval-signature",
+    "caught_by_own_control": true
+  },
+  {
+    "disabled_check": "passkey-signature",
+    "caught_by_own_control": true
+  }
+]
